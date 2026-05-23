@@ -10,7 +10,7 @@ import {useCards} from './hooks/useCards';
 const CardListPage = () => {
   const navigate = useNavigate();
   const {state, deletingCardId, refetch, removeCard} = useCards();
-  const cardCount = state.status === 'success' ? state.cards.length : null;
+  const cardCount = state.status === 'success' ? state.data.length : null;
 
   const handleAddCard = () => {
     navigate('/register');
@@ -19,11 +19,11 @@ const CardListPage = () => {
   const renderContent = () => {
     if (state.status === 'idle' || state.status === 'loading') return <CardListLoading />;
     if (state.status === 'error') return <CardListError message={state.message} onRetry={refetch} />;
-    if (state.cards.length === 0) return <CardListEmpty onAddCard={handleAddCard} />;
+    if (state.data.length === 0) return <CardListEmpty onAddCard={handleAddCard} />;
 
     return (
       <CardListSuccess
-        cards={state.cards}
+        cards={state.data}
         deletingCardId={deletingCardId}
         onAddCard={handleAddCard}
         onDeleteCard={removeCard}
